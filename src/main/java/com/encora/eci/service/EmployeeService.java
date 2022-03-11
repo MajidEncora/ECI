@@ -35,7 +35,7 @@ public class EmployeeService {
         return report;
     }
 
-    public Iterable getAllEmployees(){
+    public Iterable<Employee> getAllEmployees(){
         return employeeRepository.findAll();
     }
 

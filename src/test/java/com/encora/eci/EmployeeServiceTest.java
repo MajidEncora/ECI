@@ -20,7 +20,6 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest
 public class EmployeeServiceTest {
 
     @Mock
@@ -30,7 +29,7 @@ public class EmployeeServiceTest {
     @Mock
     private AddressRepository addressRepository;
 
-    @InjectMocks
+    @Mock
     private PositionService positionService = new PositionService(positionRepository);
     @InjectMocks
     private AddressService addressService = new AddressService(addressRepository);
