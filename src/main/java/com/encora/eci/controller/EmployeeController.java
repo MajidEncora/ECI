@@ -2,10 +2,7 @@ package com.encora.eci.controller;
 
 import com.encora.eci.controller.exception.EmployeeIdMismatchException;
 import com.encora.eci.controller.exception.EmployeeNotFoundException;
-import com.encora.eci.controller.response.BirthdayReport;
-import com.encora.eci.controller.response.CRUDResponse;
-import com.encora.eci.controller.response.CountryReport;
-import com.encora.eci.controller.response.GenderReport;
+import com.encora.eci.controller.response.*;
 import com.encora.eci.persistance.model.Employee;
 import com.encora.eci.persistance.model.GenderTypes;
 import com.encora.eci.persistance.repository.EmployeeRepository;
@@ -35,15 +32,24 @@ public class EmployeeController {
         return employeeService.getAllEmployees();
     }
 
-    @GetMapping("/birthdayReport")
+    @GetMapping("/admin/birthdayReport")
     public BirthdayReport findByBirthday() {
         return employeeService.getBirthdayReport();
     }
 
     @GetMapping("/{id}")
-    public Employee findOne(@PathVariable Integer id) {
+    public DetailedEmployee findOne(@PathVariable Integer id) {
         try{
-            return employeeService.findById(id);
+            return employeeService.getDetailedEmployee(id, false);
+        }catch (Exception e){
+            throw new EmployeeNotFoundException();
+        }
+    }
+
+    @GetMapping("/admin/{id}")
+    public DetailedEmployee findOneAdmin(@PathVariable Integer id) {
+        try{
+            return employeeService.getDetailedEmployee(id, true);
         }catch (Exception e){
             throw new EmployeeNotFoundException();
         }

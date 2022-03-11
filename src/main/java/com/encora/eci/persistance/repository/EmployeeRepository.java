@@ -12,7 +12,6 @@ import java.util.List;
 public interface EmployeeRepository extends CrudRepository<Employee, Integer> {
     List<Employee> findByBirthday(LocalDate birthday);
     List<Employee> findEmployeesByBirthdayBetween(LocalDate from, LocalDate to);
-    List<Employee> findEmployeesByCountry(String country);
     long countByGenderAndDeletedAtNull(GenderTypes gender);
     List<Employee> findEmployeesByFirstNameContaining(String name);
     List<Employee> findEmployeesByLastNameContaining(String name);

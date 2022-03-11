@@ -1,11 +1,7 @@
 package com.encora.eci.service;
 
-import com.encora.eci.EciApplication;
-import com.encora.eci.controller.exception.EmployeeNotFoundException;
-import com.encora.eci.controller.response.BirthdayReport;
-import com.encora.eci.controller.response.CRUDResponse;
-import com.encora.eci.controller.response.CountryReport;
-import com.encora.eci.controller.response.GenderReport;
+import com.encora.eci.controller.response.*;
+import com.encora.eci.persistance.model.Address;
 import com.encora.eci.persistance.model.Employee;
 import com.encora.eci.persistance.model.GenderTypes;
 import com.encora.eci.persistance.model.Position;
@@ -21,12 +17,14 @@ import java.util.*;
 public class EmployeeService {
 
     private static final Logger log = LoggerFactory.getLogger(EmployeeService.class);
-    private EmployeeRepository employeeRepository;
-    private PositionService positionService;
+    private final EmployeeRepository employeeRepository;
+    private final PositionService positionService;
+    private final AddressService addressService;
 
-    public EmployeeService(EmployeeRepository employeeRepository, PositionService positionService) {
+    public EmployeeService(EmployeeRepository employeeRepository, PositionService positionService, AddressService addressService) {
         this.employeeRepository = employeeRepository;
         this.positionService = positionService;
+        this.addressService = addressService;
     }
 
     public GenderReport getGenderReport(){
@@ -47,13 +45,21 @@ public class EmployeeService {
         LocalDate from = parsedBirthday.plusDays(1);
         LocalDate to = parsedBirthday.plusDays(6);
         List<Employee> nextWeekList = employeeRepository.findEmployeesByBirthdayBetween(from, to);
-        BirthdayReport report = new BirthdayReport(todaysList, nextWeekList);
-        return report;
+        return new BirthdayReport(todaysList, nextWeekList);
     }
 
-    public Employee findById(Integer id) {
-        return employeeRepository.findById(id)
-                .orElseThrow(EmployeeNotFoundException::new);
+    public DetailedEmployee getDetailedEmployee(Integer id, boolean admin) {
+        Optional<Employee> employee = employeeRepository.findById(id);
+        if(employee.isEmpty())
+            return null;
+        List<Position> positions = admin ? positionService.positionsByEmployee(employee.get().getId()) : new ArrayList<>();
+        Optional<Address> addressOptional = addressService.getEmployeeAddress(employee.get().getAddressId());
+        Address address = addressOptional.orElseGet(() -> new Address("N/A", "N/A", "N/A"));
+        return new DetailedEmployee(employee.get(), address, positions);
+    }
+
+    public Employee findById(Integer id){
+        return employeeRepository.findById(id).orElse(null);
     }
 
     public Employee save(Employee employee) {

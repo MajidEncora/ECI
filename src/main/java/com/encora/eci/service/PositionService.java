@@ -39,6 +39,10 @@ public class PositionService {
         }
     }
 
+    public List<Position> positionsByEmployee(Integer employeeId){
+        return positionRepository.findPositionsByEmployeeId(employeeId);
+    }
+
     public void disablePositionsFromEmployee(Integer employeeId){
         List<Position> positionsFromSameEmployee = positionRepository.findPositionsByEmployeeId(employeeId);
 
