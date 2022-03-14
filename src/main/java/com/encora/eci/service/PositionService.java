@@ -25,11 +25,6 @@ public class PositionService {
         return positionRepository.save(position);
     }
 
-    public Optional<Position> getById(Integer id){
-        Optional<Position> target = positionRepository.findById(id);
-        return target;
-    }
-
     public void terminateByEmployeeId(Integer employeeId){
         Position position = positionRepository.findPositionByEmployeeIdAndActiveTrue(employeeId);
         if(position!=null){
