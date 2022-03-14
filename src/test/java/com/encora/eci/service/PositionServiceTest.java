@@ -2,6 +2,7 @@ package com.encora.eci.service;
 
 import com.encora.eci.controller.response.PositionsReport;
 import com.encora.eci.persistance.model.Position;
+import com.encora.eci.persistance.repository.EmployeeRepository;
 import com.encora.eci.persistance.repository.PositionRepository;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,11 +21,13 @@ class PositionServiceTest {
 
     PositionRepository positionRepository;
     PositionService positionService;
+    EmployeeRepository employeeRepository;
 
     @BeforeEach
     void setMocks(){
         positionRepository = Mockito.mock(PositionRepository.class);
-        positionService = new PositionService(positionRepository);
+        employeeRepository = Mockito.mock(EmployeeRepository.class);
+        positionService = new PositionService(positionRepository, employeeRepository);
     }
 
     @Test

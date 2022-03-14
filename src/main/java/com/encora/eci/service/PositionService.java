@@ -1,7 +1,10 @@
 package com.encora.eci.service;
 
+import com.encora.eci.controller.exception.EmployeeNotFoundException;
 import com.encora.eci.controller.response.PositionsReport;
+import com.encora.eci.persistance.model.Employee;
 import com.encora.eci.persistance.model.Position;
+import com.encora.eci.persistance.repository.EmployeeRepository;
 import com.encora.eci.persistance.repository.PositionRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,12 +17,18 @@ public class PositionService {
 
     private static final Logger log = LoggerFactory.getLogger(PositionService.class);
     private PositionRepository positionRepository;
+    private EmployeeRepository employeeRepository;
 
-    public PositionService(PositionRepository positionRepository) {
+    public PositionService(PositionRepository positionRepository, EmployeeRepository employeeRepository) {
+        this.employeeRepository = employeeRepository;
         this.positionRepository = positionRepository;
     }
 
     public Position asignPosition(Position position){
+        Optional<Employee> employee = employeeRepository.findById(position.getEmployeeId());
+        if(employee.isEmpty()){
+            throw new EmployeeNotFoundException();
+        }
         disablePositionsFromEmployee(position.getEmployeeId());
         position.setActive(true);
         return positionRepository.save(position);
