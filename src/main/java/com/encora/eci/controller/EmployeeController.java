@@ -55,7 +55,7 @@ public class EmployeeController {
         }
     }
 
-    @PostMapping(
+    @PostMapping(value = "/admin",
             consumes = {MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
