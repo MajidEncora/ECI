@@ -64,13 +64,7 @@ class PositionServiceTest {
     @Test
     void generateReport(){
         //Given
-        List<Position> positions = new ArrayList<>();
-        Position position = new Position("Developer", 30000, 1,true);
-        Position position2 = new Position("Developer", 30000, 2,true);
-        Position position3 = new Position("Manager", 30000, 3,true);
-        positions.add(position2);
-        positions.add(position);
-        positions.add(position3);
+        List<Position> positions = generatePositions();
 
         when(positionRepository.findPositionsByActiveTrue()).thenReturn(positions);
         //When
@@ -84,13 +78,7 @@ class PositionServiceTest {
     @Test
     void generateSalaryReport(){
         //Given
-        List<Position> positions = new ArrayList<>();
-        Position position = new Position("Developer", 30000, 1,true);
-        Position position2 = new Position("Developer", 30000, 2,true);
-        Position position3 = new Position("Manager", 40000, 3,true);
-        positions.add(position2);
-        positions.add(position);
-        positions.add(position3);
+        List<Position> positions = generatePositions();
 
         when(positionRepository.findPositionsByActiveTrue()).thenReturn(positions);
         //When
@@ -99,5 +87,13 @@ class PositionServiceTest {
         //Then
         assertThat(report.getReport().get("30000")).isEqualTo(2);
         assertThat(report.getReport().get("40000")).isEqualTo(1);
+    }
+
+    private List<Position> generatePositions(){
+        List<Position> positions = new ArrayList<>();
+        positions.add(new Position("Developer", 30000, 1,true));
+        positions.add(new Position("Developer", 30000, 2,true));
+        positions.add(new Position("Manager", 40000, 3,true));
+        return positions;
     }
 }

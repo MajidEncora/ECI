@@ -1,9 +1,7 @@
 package com.encora.eci.persistance.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 public class Address {
@@ -11,16 +9,47 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+    @NotBlank
     private String street;
+
+    @NotBlank
     private String number;
+
+    @NotBlank
     private String zipCode;
+
+    @Column(nullable = false)
+    @NotBlank
+    private String state;
+
+    @Column(nullable = false)
+    @NotBlank
+    private String country;
 
     protected Address(){}
 
-    public Address(String street, String number, String zipCode) {
+    public Address(String street, String number, String zipCode, String country, String state) {
         this.street = street;
         this.number = number;
         this.zipCode = zipCode;
+        this.state = state;
+        this.country = country;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
 
     public void setStreet(String street) {
@@ -54,7 +83,7 @@ public class Address {
     @Override
     public String toString() {
         return String.format(
-                "Address[id=%d, street='%s', number='%s', zipCode='%s']",
-                id, street, number, zipCode);
+                "Address[id=%d, street='%s', number='%s', zipCode='%s', state='%s', country='%s']",
+                id, street, number, zipCode, state, country);
     }
 }

@@ -9,6 +9,7 @@ import com.encora.eci.persistance.repository.PositionRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -24,6 +25,7 @@ public class PositionService {
         this.positionRepository = positionRepository;
     }
 
+    @Transactional
     public Position asignPosition(Position position){
         Optional<Employee> employee = employeeRepository.findById(position.getEmployeeId());
         if(employee.isEmpty()){
@@ -83,10 +85,10 @@ public class PositionService {
     }
 
     public List<Position> getPositionsByName(String name){
-        return positionRepository.findPositionsByNameAndActiveTrue(name);
+        return positionRepository.findPositionsByNameIgnoreCaseAndActiveTrue(name);
     }
 
     public List<Position> getPositionsByNameAdmin(String name){
-        return positionRepository.findPositionsByNameAndActiveTrueOrTerminatedTrue(name);
+        return positionRepository.findPositionsByNameIgnoreCaseAndActiveTrueOrTerminatedTrue(name);
     }
 }

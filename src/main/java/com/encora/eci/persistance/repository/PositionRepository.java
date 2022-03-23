@@ -11,6 +11,6 @@ public interface PositionRepository  extends CrudRepository<Position, Integer> {
     List<Position> findPositionsByEmployeeId(Integer employeeId);
     Position findPositionByEmployeeIdAndActiveTrue(Integer employeeId);
     List<Position> findPositionsByActiveTrue();
-    List<Position> findPositionsByNameAndActiveTrue(String name);
-    List<Position> findPositionsByNameAndActiveTrueOrTerminatedTrue(String name);
+    List<Position> findPositionsByNameIgnoreCaseAndActiveTrue(String name);
+    List<Position> findPositionsByNameIgnoreCaseAndActiveTrueOrTerminatedTrue(String name);
 }

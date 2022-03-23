@@ -18,4 +18,6 @@ public interface EmployeeRepository extends CrudRepository<Employee, Integer> {
     List<Employee> findEmployeesByFirstNameContainingAndDeletedAtNull(String name);
     List<Employee> findEmployeesByLastNameContainingAndDeletedAtNull(String lastname);
     List<Employee> findEmployeesByDeletedAtNull();
+    List<Employee> findEmployeesByFirstNameContainingAndLastNameContaining(String name, String lastname);
+    List<Employee> findEmployeesByFirstNameContainingAndLastNameContainingAndDeletedAtNull(String name, String lastname);
 }

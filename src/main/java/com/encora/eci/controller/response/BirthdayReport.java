@@ -6,8 +6,8 @@ import java.util.List;
 
 public class BirthdayReport {
 
-    List<Employee> todaysList;
-    List<Employee> nextWeekList;
+    private List<Employee> todaysList;
+    private List<Employee> nextWeekList;
 
     public List<Employee> getTodaysList() {
         return todaysList;

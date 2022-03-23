@@ -1,9 +1,9 @@
 package com.encora.eci.controller.response;
 
 public class GenderReport {
-    long maleGender;
-    long femaleGender;
-    long otherGender;
+    private long maleGender;
+    private long femaleGender;
+    private long otherGender;
 
     public GenderReport(){}
 

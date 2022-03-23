@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 
 @Entity
@@ -13,12 +15,16 @@ public class Employee {
     private Integer id;
 
     @Column(nullable = false, unique = true)
+    @Email
+    @NotBlank
     private String corporateEmail;
 
     @Column(nullable = false)
+    @NotBlank
     private String firstName;
 
     @Column(nullable = false)
+    @NotBlank
     private String lastName;
 
     @Enumerated
@@ -26,16 +32,11 @@ public class Employee {
     private GenderTypes gender;
 
     @Column
+    @Email
     private String personalEmail;
 
     @Column
     private String phone;
-
-    @Column(nullable = false)
-    private String state;
-
-    @Column(nullable = false)
-    private String country;
 
     @Column(nullable = false)
     private Integer addressId;
@@ -67,25 +68,21 @@ public class Employee {
         super();
     }
 
-    public Employee(String corporateEmail, String firstName, String lastName, GenderTypes gender, String country, String state, Integer addressId) {
+    public Employee(String corporateEmail, String firstName, String lastName, GenderTypes gender, Integer addressId) {
         this.corporateEmail = corporateEmail;
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
-        this.state = state;
-        this.country = country;
         this.addressId = addressId;
     }
 
-    public Employee(String corporateEmail, String firstName, String lastName, GenderTypes gender, String country, String state, Integer addressId, String personalEmail, String phone, String birthday) {
+    public Employee(String corporateEmail, String firstName, String lastName, GenderTypes gender, Integer addressId, String personalEmail, String phone, String birthday) {
         this.corporateEmail = corporateEmail;
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
         this.personalEmail = personalEmail;
         this.phone = phone;
-        this.state = state;
-        this.country = country;
         this.addressId = addressId;
         this.birthday = LocalDate.parse(birthday);
     }
@@ -145,14 +142,6 @@ public class Employee {
 
     public Integer getId() {
         return id;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public String getCountry() {
-        return country;
     }
 
     @Override

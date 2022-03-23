@@ -7,6 +7,7 @@ import com.encora.eci.persistance.model.Position;
 import java.util.List;
 
 public class DetailedEmployee {
+
     private Employee employee;
     private Address address;
     private List<Position> positions;

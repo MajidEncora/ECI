@@ -1,6 +1,5 @@
 package com.encora.eci.controller;
 
-import com.encora.eci.controller.response.GenderReport;
 import com.encora.eci.controller.response.PositionsReport;
 import com.encora.eci.persistance.model.Position;
 import com.encora.eci.service.PositionService;
@@ -23,7 +22,6 @@ public class PositionController {
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
     public Position create(@RequestBody Position position) {
-        System.out.println(position);
         return positionService.asignPosition(position);
     }
 

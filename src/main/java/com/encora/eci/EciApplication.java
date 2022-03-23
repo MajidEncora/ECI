@@ -32,18 +32,18 @@ public class EciApplication {
     public CommandLineRunner demo(EmployeeRepository repository, AddressRepository addressRepository) {
         return (args) -> {
 
-            Address add1 = addressRepository.save(new Address("Calle", "#1", "44630"));
-            Address add2 = addressRepository.save(new Address("Calle2", "#11", "55667"));
-            Address add3 = addressRepository.save(new Address("Calle3", "#12", "66532"));
-            Address add4 = addressRepository.save(new Address("Calle4", "#133", "12345"));
-            Address add5 = addressRepository.save(new Address("Calle5", "#145", "56789"));
+            Address add1 = addressRepository.save(new Address("Calle", "#1", "44630", "Mexico", "Jalisco"));
+            Address add2 = addressRepository.save(new Address("Calle2", "#11", "55667", "Mexico", "Guerrero"));
+            Address add3 = addressRepository.save(new Address("Calle3", "#12", "66532", "Mexico", "HMO"));
+            Address add4 = addressRepository.save(new Address("Calle4", "#133", "12345", "Mexico", "Merida"));
+            Address add5 = addressRepository.save(new Address("Calle5", "#145", "56789", "Mexico", "Merida"));
 
             // save a few customers
-            Employee one = repository.save(new Employee("corpo@email.com", "Jack", "Bauer", GenderTypes.Male, "Mexico", "Jalisco", add1.getId()));
-            Employee two = repository.save(new Employee("corpo1@email.com","Chloe", "O'Brian", GenderTypes.Female, "Mexico", "Guerrero", add2.getId()));
-            Employee three = repository.save(new Employee("corpo2@email.com","Kim", "Bauer", GenderTypes.Female, "Mexico", "HMO", add3.getId()));
-            Employee four = repository.save(new Employee("corpo3@email.com","David", "Palmer", GenderTypes.Other, "Mexico", "Merida", add4.getId()));
-            repository.save(new Employee("corpo_old@email.com","Sobre", "Rosa", GenderTypes.Other, "USA", "Texas", add5.getId()));
+            Employee one = repository.save(new Employee("corpo@email.com", "Jack", "Bauer", GenderTypes.Male, add1.getId()));
+            Employee two = repository.save(new Employee("corpo1@email.com","Chloe", "O'Brian", GenderTypes.Female, add2.getId()));
+            Employee three = repository.save(new Employee("corpo2@email.com","Kim", "Bauer", GenderTypes.Female, add3.getId()));
+            Employee four = repository.save(new Employee("corpo3@email.com","David", "Palmer", GenderTypes.Other, add4.getId()));
+            repository.save(new Employee("corpo_old@email.com","Sobre", "Rosa", GenderTypes.Other,  add5.getId()));
 
             one.setBirthday(LocalDate.now());
             two.setBirthday(LocalDate.now());
@@ -54,7 +54,7 @@ public class EciApplication {
             repository.save(three);
             repository.save(four);
             // Complete data
-            repository.save(new Employee("corpo_complete@email.com","Majid", "Mazinani", GenderTypes.Male, "Mexico", "Jalisco", 5,
+            repository.save(new Employee("corpo_complete@email.com","Majid", "Mazinani", GenderTypes.Male, 5,
                     "shahin@hotmail.com", "3315997094", "1989-04-03"));
 
             // fetch all customers

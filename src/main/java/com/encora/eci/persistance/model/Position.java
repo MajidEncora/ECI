@@ -3,6 +3,8 @@ package com.encora.eci.persistance.model;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.sql.Date;
 
 @Entity
@@ -12,9 +14,11 @@ public class Position {
     private Integer id;
 
     @Column(nullable = false)
+    @NotBlank
     private String name;
 
     @Column(nullable = false)
+    @NotNull
     private Integer salary;
 
     @Column(nullable = false)
@@ -73,6 +77,10 @@ public class Position {
 
     public void setTerminated(boolean terminated) {
         this.terminated = terminated;
+    }
+
+    public void setEmployeeId(Integer employeeId) {
+        this.employeeId = employeeId;
     }
 
     @Override

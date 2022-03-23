@@ -20,4 +20,8 @@ public class AddressService {
     public Optional<Address> getEmployeeAddress(Integer id){
         return addressRepository.findById(id);
     }
+
+    public Address save(Address address){
+        return addressRepository.save(address);
+    }
 }

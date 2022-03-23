@@ -56,9 +56,9 @@ class EmployeeServiceTest {
         //Given
         List<Employee> todaysList = new ArrayList<>();
         List<Employee> nextWeekList = new ArrayList<>();
-        todaysList.add(new Employee("corpo@email.com", "Jack", "Bauer", GenderTypes.Male, "Mexico", "Jalisco", 1));
-        nextWeekList.add(new Employee("corpo@email.com", "Jack", "Bauer", GenderTypes.Male, "Mexico", "Jalisco", 1));
-        nextWeekList.add(new Employee("corpo@email.com", "Jack", "Bauer", GenderTypes.Male, "Mexico", "Jalisco", 1));
+        todaysList.add(new Employee("corpo@email.com", "Jack", "Bauer", GenderTypes.Male, 1));
+        nextWeekList.add(new Employee("corpo@email.com", "Jack", "Bauer", GenderTypes.Male, 1));
+        nextWeekList.add(new Employee("corpo@email.com", "Jack", "Bauer", GenderTypes.Male, 1));
         LocalDate parsedBirthday = LocalDate.now();
 
         //When
@@ -79,8 +79,8 @@ class EmployeeServiceTest {
         Position position2 = new Position("Developer", 35000, 1,true);
         positions.add(position2);
         positions.add(position);
-        Address address = new Address("street", "111", "33445");
-        Employee employee = new Employee("corpo@email.com", "Jack", "Bauer", GenderTypes.Male, "Mexico", "Jalisco", 11);
+        Address address = new Address("street", "111", "33445", "Mexico", "Jalisco");
+        Employee employee = new Employee("corpo@email.com", "Jack", "Bauer", GenderTypes.Male, 11);
 
         when(employeeRepository.findById(1)).thenReturn(Optional.of(employee));
         when(positionService.positionsByEmployee(null)).thenReturn(positions);
@@ -100,20 +100,19 @@ class EmployeeServiceTest {
     @Test
     void generateCountryReport() {
         //Given
+        Address address = new Address("street", "111", "33445", "Mexico", "Jalisco");
         List<Employee> employees = new ArrayList<>();
-        employees.add(new Employee("corpo@email.com", "Jack", "Bauer", GenderTypes.Male, "Mexico", "Jalisco", 1));
-        employees.add(new Employee("corpo@email.com", "Jack", "Bauer", GenderTypes.Male, "Mexico", "Jalisco", 1));
-        employees.add(new Employee("corpo@email.com", "Jack", "Bauer", GenderTypes.Male, "Mexico", "HMO", 1));
-        employees.add(new Employee("corpo@email.com", "Jack", "Bauer", GenderTypes.Male, "USA", "Texas", 1));
+        employees.add(new Employee("corpo@email.com", "Jack", "Bauer", GenderTypes.Male, 1));
+        employees.add(new Employee("corpo@email.com", "Jack", "Bauer", GenderTypes.Male, 1));
+        employees.add(new Employee("corpo@email.com", "Jack", "Bauer", GenderTypes.Male, 1));
+        employees.add(new Employee("corpo@email.com", "Jack", "Bauer", GenderTypes.Male, 1));
         when(employeeRepository.findEmployeesByDeletedAtNull()).thenReturn(employees);
+        when(addressService.getEmployeeAddress(1)).thenReturn(Optional.of(address));
 
         //When
         CountryReport countryReport = employeeService.generateCountryReport();
 
         //Then
-        assertThat(countryReport.getCountryReport().get("Mexico").size()).isEqualTo(3);
-        assertThat(countryReport.getCountryReport().get("USA").size()).isEqualTo(1);
-        assertThat(countryReport.getStateReport().get("Jalisco").size()).isEqualTo(2);
-        assertThat(countryReport.getStateReport().get("HMO").size()).isEqualTo(1);
+        assertThat(countryReport.getReport().get("Mexico")).isEqualTo(4);
     }
 }
